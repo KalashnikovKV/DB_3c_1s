@@ -1,0 +1,4 @@
+VideoID,UserID,ReactionType,ReactionDate
+1,1,Like,2023-12-01 10:05:00
+2,2,Dislike,2023-12-01 11:05:00
+3,3,Like,2023-12-01 12:05:00

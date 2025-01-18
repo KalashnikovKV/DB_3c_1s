@@ -1,0 +1,64 @@
+CREATE TABLE Users (
+    UserID SERIAL PRIMARY KEY,
+    Name VARCHAR(255) NOT NULL,
+    Email VARCHAR(255) UNIQUE NOT NULL,
+    PasswordHash VARCHAR(255) NOT NULL,
+    RegistrationDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE Roles (
+    RoleID SERIAL PRIMARY KEY,
+    RoleName VARCHAR(50) NOT NULL UNIQUE
+);
+
+CREATE TABLE UserRoles (
+    UserRoleID SERIAL PRIMARY KEY,
+    UserID INT NOT NULL,
+    RoleID INT NOT NULL,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (RoleID) REFERENCES Roles(RoleID)
+);
+
+CREATE TABLE Videos (
+    VideoID SERIAL PRIMARY KEY,
+    Title VARCHAR(255) NOT NULL,
+    Description TEXT,
+    Duration INT NOT NULL,
+    Category VARCHAR(50),
+    UploadDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    CONSTRAINT unique_title UNIQUE (Title)
+);
+
+CREATE TABLE Categories (
+    CategoryID SERIAL PRIMARY KEY,
+    CategoryName VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE Views (
+    ViewID SERIAL PRIMARY KEY,
+    VideoID INT NOT NULL,
+    UserID INT NOT NULL,
+    ViewDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (VideoID) REFERENCES Videos(VideoID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE Reactions (
+    ReactionID SERIAL PRIMARY KEY,
+    VideoID INT NOT NULL,
+    UserID INT NOT NULL,
+    ReactionType VARCHAR(10) CHECK (ReactionType IN ('Like', 'Dislike')),
+    ReactionDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (VideoID) REFERENCES Videos(VideoID),
+    FOREIGN KEY (UserID) REFERENCES Users(UserID)
+);
+
+CREATE TABLE Subscriptions (
+    SubscriptionID SERIAL PRIMARY KEY,
+    SubscriberID INT NOT NULL,
+    SubscribedToID INT NOT NULL,
+    SubscriptionDate TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (SubscriberID) REFERENCES Users(UserID),
+    FOREIGN KEY (SubscribedToID) REFERENCES Users(UserID)
+);
+

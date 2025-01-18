@@ -1,0 +1,4 @@
+SubscriberID,SubscribedToID,SubscriptionDate
+1,2,2023-12-01 09:00:00
+2,3,2023-12-01 09:30:00
+3,1,2023-12-01 09:45:00
